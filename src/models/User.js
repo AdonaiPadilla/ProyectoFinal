@@ -1,0 +1,1 @@
+//Aquí van los datos del (admin|gerente|usuario) nombre, email, password, rol 
