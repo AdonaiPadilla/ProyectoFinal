@@ -14,7 +14,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Aquí más adelante montamos las rutas reales:
-// app.use('/api/auth', require('./routes/auth.routes'));
+app.use('/api/auth', require('./routes/auth.routes'));
 // app.use('/api/users', require('./routes/user.routes'));
 // app.use('/api/books', require('./routes/book.routes'));
 // app.use('/api/purchases', require('./routes/purchase.routes'));
