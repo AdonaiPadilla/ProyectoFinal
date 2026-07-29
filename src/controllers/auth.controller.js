@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { comparePassword } = require('../utils/hash.util');
+const { hashPassword, comparePassword } = require('../utils/hash.util');
 const { generateToken } = require('../utils/jwt.util');
 
 // POST /api/auth/register
@@ -16,10 +16,12 @@ const register = async (req, res) => {
       return res.status(409).json({ message: 'Ese email ya está registrado' });
     }
 
+    const passwordHasheada = await hashPassword(password);
+
     const nuevoUsuario = await User.create({
       nombre,
       email,
-      password, // el pre('save') del modelo se encarga de hashearlo
+      password: passwordHasheada,
       rol: rol || 'usuario' // por seguridad, si no mandan rol, se asigna 'usuario'
     });
 
