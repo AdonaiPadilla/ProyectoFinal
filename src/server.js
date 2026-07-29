@@ -10,7 +10,7 @@ const app = require('./app');              // La app de Express con todas sus ru
 const connectDB = require('./config/db');  // Función que conecta a MongoDB
 
 connectDB().then(() => {
-  app.listen(env.PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${env.PORT}`);
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
   });
 });
