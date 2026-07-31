@@ -13,13 +13,9 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'API funcionando correctamente' });
 });
 
-// Aquí más adelante montamos las rutas reales:
+// Aquí más adelante estaran las rutas reales:
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/books', require('./routes/book.routes'));
-// app.use('/api/users', require('./routes/user.routes'));
-// app.use('/api/purchases', require('./routes/purchase.routes'));
-// app.use('/api/rentals', require('./routes/rental.routes'));
-// app.use('/api/admin', require('./routes/admin.routes'));
 
 // Middleware de manejo de errores (siempre al final)
 app.use(require('./middlewares/error.middleware'));
