@@ -1,4 +1,6 @@
 const Book = require('../models/Book');
+const path = require('path');
+const { generarVistaPrevia } = require('../services/pdf.service');
 
 // GET /api/books  (público)
 const getBooks = async (req, res, next) => {
@@ -32,6 +34,28 @@ const getBookById = async (req, res, next) => {
     }
 
     res.json({ libro });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET /api/books/:id/preview  (público)
+const getBookPreview = async (req, res, next) => {
+  try {
+    const libro = await Book.findOne({ _id: req.params.id, activo: true });
+
+    if (!libro) {
+      return res.status(404).json({ message: 'Libro no encontrado' });
+    }
+
+    const rutaAbsoluta = path.resolve(libro.archivoPdf);
+    const bufferPreview = await generarVistaPrevia(rutaAbsoluta, libro.paginasVistaPrevia);
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'inline'
+    });
+    res.send(bufferPreview);
   } catch (error) {
     next(error);
   }
@@ -85,4 +109,4 @@ const deleteBook = async (req, res, next) => {
   }
 };
 
-module.exports = { getBooks, getBookById, createBook, updateBook, deleteBook };
+module.exports = { getBooks, getBookById, createBook, updateBook, deleteBook, getBookPreview };

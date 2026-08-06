@@ -6,7 +6,8 @@ const {
   getBookById,
   createBook,
   updateBook,
-  deleteBook
+  deleteBook,
+  getBookPreview
 } = require('../controllers/book.controller');
 
 const authMiddleware = require('../middlewares/auth.middleware');
@@ -16,6 +17,7 @@ const upload = require('../middlewares/upload.middleware');
 // Rutas públicas
 router.get('/', getBooks);
 router.get('/:id', getBookById);
+router.get('/:id/preview', getBookPreview);
 
 // Rutas protegidas (solo admin y gerente pueden administrar el catálogo)
 router.post('/', authMiddleware, checkRole('admin', 'gerente'), upload.single('archivo'), createBook);
